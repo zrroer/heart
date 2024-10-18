@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chúc mừng 20/10</title>
+    <style>
+        /* Màn hình chờ */
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, #e0f7fa, #f1f8e9); /* Nền dịu cho màn hình chờ */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+        .loading-text {
+            font-size: 24px;
+            color: #c2185b;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        /* Thanh thời gian */
+        #progressBar {
+            width: 80%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        #progress {
+            height: 20px;
+            background-color: #c2185b;
+            width: 0%;
+            transition: width 1s;
+        }
+        /* Mũi tên chuyển tiếp */
+        .loading-arrow {
+            width: 50px;
+            height: 50px;
+            background-color: #ff4081;
+            clip-path: polygon(100% 50%, 0 0, 0 100%);
+            cursor: pointer;
+            animation: bounce 1s infinite alternate;
+        }
+        @keyframes bounce {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Các style của nội dung chính như ban đầu */
+        body {
+            background: linear-gradient(to right, #ba68c8, #f48fb1); /* Nền tím hồng cho màn hình chính */
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden;
+            padding-bottom: 150px; /* Dùng padding để giữ khoảng cách cho thanh nhịp đập */
+            margin: 0; /* Xóa margin mặc định */
+        }
+        .background3D {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .floating-element {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            animation: float 6s infinite ease-in-out;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(360deg);
+            }
+        }
+
+        /* Trái tim nhỏ hơn */
+        .heart {
+            color: #e91e63; /* Màu hồng nhẹ */
+            font-size: 150px; /* Giảm kích thước trái tim */
+            animation: heartbeat 1.2s infinite;
+            margin: 30px 0;
+        }
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        /* Cách điệu chữ h1 */
+        h1 {
+            font-family: 'Cursive', sans-serif; /* Thay đổi font chữ */
+            font-size: 36px; /* Giảm kích thước chữ tiêu đề */
+            color: #c2185b; /* Màu chữ */
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Cách điệu chữ p */
+        p {
+            font-family: 'Verdana', sans-serif; /* Thay đổi font chữ */
+            font-size: 20px; /* Giảm kích thước chữ */
+            color: #5d4037; /* Màu nâu nhẹ */
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Thanh nhịp đập dưới trái tim */
+        .pulse-bar-heart {
+            width: 150px;
+            height: 20px;
+            background: rgba(255, 105, 180, 0.8); /* Màu hồng nhạt */
+            border-radius: 10px;
+            margin: 10px auto;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #ff3366; /* Viền ngoài cho thanh nhịp đập */
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5); /* Đổ bóng cho thanh nhịp đập */
+        }
+        .pulse-heart {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            animation: pulse-animation 1s infinite;
+            transform-origin: left center;
+            border-radius: 10px;
+        }
+        @keyframes pulse-animation {
+            0% {
+                transform: scaleX(0);
+            }
+            50% {
+                transform: scaleX(1);
+            }
+            100% {
+                transform: scaleX(0);
+            }
+        }
+
+        .petal {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background-color: #f48fb1; /* Màu hồng nhạt */
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(800px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Màn hình chờ -->
+    <div id="loadingScreen">
+        <div class="loading-text">Chào mừng đến với trang chúc mừng 20/10!</div>
+        <div class="loading-arrow" onclick="startProgress()"></div>
+        <div id="progressBar">
+            <div id="progress"></div>
+        </div>
+    </div>
+
+    <div class="background3D">
+        <div class="floating-element" style="width: 120px; height: 120px; top: 30%; left: 10%; animation-duration: 8s;"></div>
+        <div class="floating-element" style="width: 160px; height: 160px; top: 60%; left: 80%; animation-duration: 10s;"></div>
+        <div class="floating-element" style="width: 90px; height: 90px; top: 80%; left: 40%; animation-duration: 7s;"></div>
+        <div class="floating-element" style="width: 130px; height: 130px; top: 20%; left: 70%; animation-duration: 9s;"></div>
+        <!-- Hiệu ứng hoa rơi -->
+    </div>
+
+    <h1>Chúc mừng 20/10, <span id="crushName">Tên của Crush</span>! 🌸</h1>
+    <p>
+        Cuộc sống đẹp hơn khi có bạn bên cạnh, <br>
+        mong rằng mỗi khoảnh khắc đều mang đến cho bạn niềm vui <br>
+        và những giấc mơ ngọt ngào. Hãy luôn mỉm cười nhé! 💕
+    </p>
+    
+    <div class="heart">❤️</div>
+    <div class="pulse-bar-heart">
+        <div class="pulse-heart"></div>
+    </div>
+    
+    <script>
+        // Thay đổi tên crush ở đây
+        var crushName = "Tên của Crush"; // Thay "Tên của Crush" bằng tên của crush bạn
+        document.getElementById("crushName").innerText = crushName;
+
+        // Tạo hiệu ứng hoa rơi
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            petal.style.left = Math.random() * window.innerWidth + 'px';
+            petal.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            petal.style.animationDelay = Math.random() * 2 + 's';
+            document.body.appendChild(petal);
+            setTimeout(() => petal.remove(), 5000);
+        }
+
+        // Tạo nhiều cánh hoa rơi liên tục cho màn hình chờ
+        for (let i = 0; i < 20; i++) {
+            createPetal();
+        }
+
+        // Tạo nhiều cánh hoa rơi liên tục sau khi ẩn màn hình chờ
+        function startPetals() {
+            setInterval(createPetal, 300);
+        }
+
+        // Tạo nhiều cánh hoa rơi liên tục
+        setInterval(createPetal, 300);
+
+        // Hàm ẩn màn hình chờ và bắt đầu thanh tiến trình
+        function startProgress() {
+            var progress = document.getElementById('progress');
+            var width = 0;
+
+            var interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    hideLoadingScreen(); // Ẩn màn hình chờ khi hoàn thành
+                    startPetals(); // Bắt đầu hiệu ứng hoa rơi trên màn hình chính
+                } else {
+                    width++;
+                    progress.style.width = width + '%';
+                }
+            }, 30); // Thay đổi giá trị để điều chỉnh tốc độ
+        }
+
+        // Hàm ẩn màn hình chờ
+        function hideLoadingScreen() {
+            document.getElementById('loadingScreen').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
